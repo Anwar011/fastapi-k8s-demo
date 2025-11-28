@@ -36,7 +36,7 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-k8s:latest
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build-and-push
     steps:
       - uses: actions/checkout@v4
@@ -45,7 +45,8 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
       - run: |
+          kubectl get nodes
           kubectl set image deployment/fastapi-deployment \
-          fastapi=${{ secrets.DOCKERHUB_USERNAME }}/fastapi-k8s:latest
+            fastapi=${{ secrets.DOCKERHUB_USERNAME }}/fastapi-k8s:latest
           kubectl rollout status deployment/fastapi-deployment --timeout=60s || \
           kubectl rollout undo deployment/fastapi-deployment
