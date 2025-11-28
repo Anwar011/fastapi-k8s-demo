@@ -40,4 +40,4 @@ Kubernetes (orchestration)
 
 GitHub Actions (CI/CD automation)
 
-Docker Hub (image registry)
+Docker Hub (image registry).
