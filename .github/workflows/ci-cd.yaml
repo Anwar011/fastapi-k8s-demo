@@ -45,6 +45,9 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
       - run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+      - run: |
           kubectl get nodes
           kubectl set image deployment/fastapi-deployment \
             fastapi=${{ secrets.DOCKERHUB_USERNAME }}/fastapi-k8s:latest
